@@ -17,7 +17,7 @@ _You have_
 Setup a github hook for deployment. I followed these resources
 
 1. https://www.youtube.com/watch?v=H6UU7TsyrGs
-2. https://gist.github.com/noelboss/3fe13927025b89757f8fb12e9066f2fa. 
+2. https://gist.github.com/noelboss/3fe13927025b89757f8fb12e9066f2fa
 
 ### Post-receive hook
 
@@ -47,7 +47,32 @@ done
 
 ```
 
-## Checklist for SSH connection
+
+## Git workflow with branches
+
+Follow _best practices from software development_ and center your workflow around branches. 
+
+![](img/git_workflow.png) 
+> source: https://www.youtube.com/watch?v=aJnFGMclhU8
+
+Common setup: 
+
+* __master__: Live production, business impact
+* __develop__: Common space to introduce new features in parallel to the master branch
+* __feature__: Implementing a feature that later gets pushed to _develop_ 
+* __release__: part of _develop_ that goes live with the next release
+* __hotfix__: Quick bug fixes to the production-relevant _master_, like performing open-heart surgery 
+
+
+## Appendix
+
+### Get a list of git remote 
+
+```bash
+git remote -v
+```
+
+### Checklist for SSH connection
 
 Tutorial for Win 10: [Use SSh with Putty on Windows](https://devops.ionos.com/tutorials/use-ssh-keys-with-putty-on-windows/)
 
