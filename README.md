@@ -63,6 +63,7 @@ Common setup:
 * __release__: part of _develop_ that goes live with the next release
 * __hotfix__: Quick bug fixes to the production-relevant _master_, like performing open-heart surgery 
 
+Great resource to get going with feature branch workflows: [atlassian.com/git/tutorials](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow#:~:text=The%20core%20idea%20behind%20the,without%20disturbing%20the%20main%20codebase.). 
 
 ## Appendix
 
