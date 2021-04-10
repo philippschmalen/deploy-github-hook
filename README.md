@@ -1,4 +1,67 @@
-# How to deploy to your server using git
+# How to deploy to any server with Git
+
+Power your deployment workflow with git to commit and push changes to any linux instance. Credits to @noelboss for [his great tutorial](https://gist.github.com/noelboss/3fe13927025b89757f8fb12e9066f2fa). Loving it. Though, I encountered some issues. In the `project.git/hooks/post-receive` script, the `GIT_DIR="/home/webuser/www.git"` confused me. It should read `GIT_DIR="/home/webuser/project.git"` to follow the exemplary names from the tutorial. 
+
+To make life easier for future versions of myself that gets pushed into a repository, I write this piece to list all steps that worked for the current master branch of myself. 
+
+![](img/overview.png)
+
+
+## TL;DR
+
+```sh
+# -------- SERVER SIDE
+# login with putty, then:
+$ pwd 
+/home/myusername
+# create directory for the working copy of the project 
+$ mkdir MYPATHNAME/PROJECTNAME
+# create directory and init bare repository 
+$ mkdir PROJECTNAME.git
+$ git init --bare ~/PROJECTNAME.git
+cd PROJECTNAME/hooks
+nano post-receive
+
+# --------------------------------------
+# change TARGET and GIT_DIR according the dir names above
+# change BRANCH if you don't work on master
+#!/bin/bash
+TARGET="/home/myusername/MYPATHNAME/PROJECTNAME"
+GIT_DIR="/home/myusername/PROJECTNAME.git"
+BRANCH="master"
+
+while read oldrev newrev ref
+do
+    # only checking out the master (or whatever branch you would like to deploy)
+    if [ "$ref" = "refs/heads/$BRANCH" ];
+    then
+        echo "Ref $ref received. Deploying ${BRANCH} branch to production..."
+        git --work-tree=$TARGET --git-dir=$GIT_DIR checkout -f $BRANCH
+    else
+        echo "Ref $ref received. Doing nothing: only the ${BRANCH} branch may be deployed on this server."
+    fi
+done
+# exit: CTRL+x, y
+# --------------------------------------
+# add execute permissions to the script
+$ chmod +x post-receive
+
+# -------- ON LOCAL MACHINE (WIN 10) 
+# open a cmd in your local project repository
+# assume valid setup for your server with OpenSSH in %USERPROFILE%/.ssh/id_rsa
+> git add remote ANYREMOTENAME myusername@myserveraddress:PROJECTNAME.git
+# check git remotes
+> git remote -v
+origin  https://github.com/philippschmalen/ESG-trending-topics-radar.git (fetch)
+origin  https://github.com/philippschmalen/ESG-trending-topics-radar.git (push)
+prod    myusername@myserveraddress:PROJECTNAME.git (fetch)
+prod    myusername@myserveraddress:PROJECTNAME.git (push)
+> git add . 
+> git commit -m "first deployment to server. Great work."
+> git push prod master
+
+
+```
 
 ## Setting
 _You have_
