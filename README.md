@@ -1,26 +1,36 @@
 # How to deploy to your server using git
 
 ## Setting
+_You have_
 
-* You have a git repository on your local machine and you have a server
-* SSH connection is set up
+* a git repository on your local machine 
+* a server 
+* SSH connection to your server 
 
 ## Goal
-Commit and push any changes made locally to your server
+> _You want to_ 
+
+* Use `git` to push any changes to your server _aka_ deploy local changes to your server
 
 ## Solution
 
-Setup a github hook for deployment:
-> https://www.youtube.com/watch?v=H6UU7TsyrGs
-> 
-> https://gist.github.com/noelboss/3fe13927025b89757f8fb12e9066f2fa. 
+Setup a github hook for deployment. I followed these resources
+
+1. https://www.youtube.com/watch?v=H6UU7TsyrGs
+2. https://gist.github.com/noelboss/3fe13927025b89757f8fb12e9066f2fa. 
 
 ### Post-receive hook
 
+The hook `post-receive` resides in `/home/[username]/[bare-repo-name].git/hooks`. Edit with `nano post-receive` and change _TARGET_ and _GIT\_DIR_. 
+
+* _TARGET_: Your project folder, for example `/home/username/deploy-project`
+* _GIT\_DIR_: Bare repository which you created with `git init --bare ~/deploy-github-hook.git`
+
+
 ```bash
 #!/bin/bash
-TARGET="/home/cloudsigma/deploy"
-GIT_DIR="/home/cloudsigma/deploy-github-hook.git"
+TARGET="/home/cloudsigma/deploy-project" # your project folder 
+GIT_DIR="/home/cloudsigma/deploy-project-hook.git" # bare repo
 BRANCH="master"
 
 while read oldrev newrev ref
