@@ -10,7 +10,7 @@ To make life easier for future versions of myself that gets pushed into a reposi
 ## TL;DR
 
 ```sh
-# -------- SERVER SIDE
+# -------- ON SERVER SIDE
 # login with putty, then:
 $ pwd 
 /home/myusername
@@ -43,13 +43,16 @@ do
 done
 # exit: CTRL+x, y
 # --------------------------------------
+
 # add execute permissions to the script
 $ chmod +x post-receive
 
 # -------- ON LOCAL MACHINE (WIN 10) 
 # open a cmd in your local project repository
 # assume valid setup for your server with OpenSSH in %USERPROFILE%/.ssh/id_rsa
-> git add remote ANYREMOTENAME myusername@myserveraddress:PROJECTNAME.git
+
+# add remote where you can push changes
+> git remote add ANYREMOTENAME myusername@myserveraddress:PROJECTNAME.git
 # check git remotes
 > git remote -v
 origin  https://github.com/philippschmalen/ESG-trending-topics-radar.git (fetch)
@@ -59,21 +62,20 @@ prod    myusername@myserveraddress:PROJECTNAME.git (push)
 > git add . 
 > git commit -m "first deployment to server. Great work."
 > git push prod master
-
-
+# now check if the files were pushed to your server
 ```
+git add remote prod cloudsigma@94.156.201.234:git/esg_trending_topics.git
 
-## Setting
+## Problem setting
 _You have_
 
 * a git repository on your local machine 
 * a server 
 * SSH connection to your server 
 
-## Goal
-> _You want to_ 
+_You want to_ 
 
-* Use `git` to push any changes to your server _aka_ deploy local changes to your server
+Use `git push` to upload any changes from your local machine to your server. 
 
 ## Solution
 
